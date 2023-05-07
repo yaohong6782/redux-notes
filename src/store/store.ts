@@ -1,14 +1,18 @@
-import { configureStore, Action } from "@reduxjs/toolkit";
+import { configureStore, Action, combineReducers } from "@reduxjs/toolkit";
 
 interface AppState {
-  count: number;
+  counter: number;
 }
 
 const initialState: AppState = {
-  count: 0,
+  counter: 0,
 };
 
+const initialUsername = {
+  username: "",
+};
 interface AppAction extends Action {
+  payload: any;
   type: string;
 }
 
@@ -17,23 +21,41 @@ function reducer(state = initialState, action: AppAction) {
     case "INCREMENT":
       return {
         ...state,
-        count: state.count + 1,
+        counter: state.counter + 1,
       };
     case "DECREMENT":
       return {
         ...state,
-        count: state.count - 1,
+        counter: state.counter - 1,
       };
-
     case "RESET":
-      return initialState
+      return initialState;
     default:
       return state;
   }
 }
 
+function reducerUsername(state = initialUsername, action: AppAction) {
+  switch (action.type) {
+    case "SET_USERNAME":
+      return {
+        ...state,
+        username: action.payload,
+      };
+    case "RESET":
+      return initialUsername;
+
+    default:
+      return state;
+  }
+}
+
+const rootReducer = combineReducers({
+  count: reducer,
+  username: reducerUsername,
+});
 const store = configureStore({
-  reducer: reducer,
+  reducer: rootReducer,
 });
 
 export default store;

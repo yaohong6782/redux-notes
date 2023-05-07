@@ -1,12 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
-import { increment, decrement, reset } from "./actions";
+import { increment, decrement, reset, setUsername } from "./actions";
 
 function MyRedux() {
   interface AppState {
-    count: number;
+    count: { counter: number };
+    username: { username: string };
   }
 
-  const count = useSelector((state: AppState) => state.count);
+
+  const count = useSelector((state: AppState) => state.count.counter);
+  const username = useSelector((state: AppState) => state.username.username);
   const dispatch = useDispatch();
 
   const handleIncrement = () => {
@@ -19,10 +22,18 @@ function MyRedux() {
 
   const resetCount = () => {
     dispatch(reset());
-  }
+  };
+
+  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setUsername(event.target.value));
+  };
 
   return (
     <div>
+      <div>
+        <label>Username:</label>
+        <input type="text" value={username} onChange={handleUsernameChange} />
+      </div>
       <h1>Count: {count}</h1>
       <button onClick={handleIncrement}>Increment</button>
       <button onClick={handleDecrement}>Decrement</button>

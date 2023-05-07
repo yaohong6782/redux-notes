@@ -17,3 +17,15 @@ export const reset = (): Action => {
     type: "RESET",
   };
 };
+
+interface SetUsernameAction extends Action {
+  type: "SET_USERNAME";
+  payload: string;
+}
+
+export const setUsername = (username: string): SetUsernameAction => {
+  return {
+    type: "SET_USERNAME",
+    payload: username,
+  };
+};
