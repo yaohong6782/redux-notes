@@ -12,7 +12,7 @@ const initialUsername = {
   username: "",
 };
 interface AppAction extends Action {
-  payload: any;
+  payload: string;
   type: string;
 }
 

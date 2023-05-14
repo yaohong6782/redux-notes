@@ -4,12 +4,15 @@ import { increment, decrement, reset, setUsername } from "./actions";
 function MyRedux() {
   interface AppState {
     count: { counter: number };
+  }
+  interface AppUsernameState {
     username: { username: string };
   }
 
-
   const count = useSelector((state: AppState) => state.count.counter);
-  const username = useSelector((state: AppState) => state.username.username);
+  const username = useSelector(
+    (state: AppUsernameState) => state.username.username
+  );
   const dispatch = useDispatch();
 
   const handleIncrement = () => {
